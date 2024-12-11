@@ -15,6 +15,7 @@ public class Collection {
 
 	public void setSlayers(Slayers slayers) {
 		this.slayers = slayers;
+		this.slayers = null;
 	}
 	
 }
