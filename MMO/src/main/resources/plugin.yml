@@ -1,0 +1,6 @@
+name: Mongo
+version: '${project.version}'
+main: eu.isweezee.mmo.MMO
+api-version: 1.16
+commands:
+  animationtest:
