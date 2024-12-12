@@ -23,7 +23,6 @@ import net.minecraft.server.v1_16_R3.WorldServer;
 
 public class test extends EntityCow{
 
-	
 	public test(Location location) {
 		super(EntityTypes.COW, ((CraftWorld)location.getWorld()).getHandle());
 		this.setLocation(location.getX(), location.getY(), location.getZ(), location.getPitch(), location.getYaw());

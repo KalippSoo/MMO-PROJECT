@@ -26,6 +26,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/bouch/Desktop/Servers/1.16/Server 1/plugins/NPCPlugin.jar"/>
-	<classpathentry kind="lib" path="C:/Users/bouch/Desktop/Servers/1.16/Server 1/spigot.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
