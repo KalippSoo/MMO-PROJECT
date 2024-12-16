@@ -33,7 +33,7 @@ public class MMO extends JavaPlugin{
 	//Collections
 	public static MongoCollection<Document> items = mongoDatabase.getCollection("items");
 	public static MongoCollection<Document> players = mongoDatabase.getCollection("players");
-	
+
 	@Override
 	public void onEnable() {
 

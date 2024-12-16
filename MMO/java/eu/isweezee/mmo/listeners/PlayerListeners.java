@@ -24,6 +24,7 @@ import eu.isweezee.mmo.extra.ItemCreator;
 import eu.isweezee.mmo.extra.UtilsFactory;
 import eu.isweezee.mmo.inventories.Menu;
 import eu.isweezee.mmo.inventories.SpellInventory;
+import eu.isweezee.mmo.inventories.settings.Settings;
 
 public class PlayerListeners implements Listener{
 	
@@ -78,7 +79,8 @@ public class PlayerListeners implements Listener{
 		switch (e.getCurrentItem().getType()) {
 		case EMERALD:
 			if (itemName == "Your profile") {
-				
+				Settings settings = new Settings();
+				settings.dispose(player);
 			}
 			break;
 		case TOTEM_OF_UNDYING: case CHEST:

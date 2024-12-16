@@ -1,0 +1,48 @@
+########################################################################################
+####    ██╗░██████╗███╗░░░███╗░█████╗░███╗░░██╗░█████╗░░██████╗░███████╗██████╗░    ####
+####    ██║██╔════╝████╗░████║██╔══██╗████╗░██║██╔══██╗██╔════╝░██╔════╝██╔══██╗    ####
+####    ██║╚█████╗░██╔████╔██║███████║██╔██╗██║███████║██║░░██╗░█████╗░░██████╔╝    ####
+####    ██║░╚═══██╗██║╚██╔╝██║██╔══██║██║╚████║██╔══██║██║░░╚██╗██╔══╝░░██╔══██╗    ####
+####    ██║██████╔╝██║░╚═╝░██║██║░░██║██║░╚███║██║░░██║╚██████╔╝███████╗██║░░██║    ####
+####    ╚═╝╚═════╝░╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝░╚═════╝░╚══════╝╚═╝░░╚═╝    ####
+########################################################################################
+#
+# Plugin by ISweeZee 
+# 
+# Tout symbol utilisé par UTF-8 son autorisé dans minecraft !
+# Pour change le skin du NPC vous devez changer la signature et texture !
+# 
+# Pour commencer, installez le skin souhaité et rendez-vous sur https://mineskin.org/ !
+# Importez le skin en cliquant sur 'SELECT FILE' en cliquant sur 'GENERATE' 
+# Deux "liens" apparaîtront 'Texture Value' qui correspond à la texture et l'autre à la signature !
+
+# 'true' make npcs loot at player
+# 'false' make npcs look in their direction
+npc-loot-at-player: true
+
+# How many block between player and npc, for the npc to watch the player
+npc-loot-at-player-distance: 5
+
+# Blocks between player and npc to update it
+player-view-distance-npc: 32
+
+# Info:
+#   lootAt: this option serve to set a direction at the npcs direction
+
+npc:
+  36d09ab8-e8cd-11ed-a05b-0242ac120003:
+    info:
+      name: 
+        - '&e&lCLIQUE DROIT'
+        - '&eJoseph'
+      lookAt:
+        yaw: 90.0
+        pitch: 0
+    skin:
+      signature: XN6EesCwTkYAIQAiCTUF2G8jGuIwC4fpRWMa9OCxcraQyQ1w5XHOavDnxbbsxtzJhi+/YfOdrSPz8UIZMQR22/8FFDvOUDig8XKfCUGIF96ZwYMRCTKyfD+lCvtNnK3Tz3/Cyah82LHpfWr61HE7eFw7V5up+lpfFxyp2FlgnVmXIepf76gTnCHp1+tfXOWwO8kZu4fgOVsJc9yz2lgL4X2av/7CzvZMptIB3ID73wK2uQLxEFhe5x1VoQmvkcb2KhKX5+9jjeeVaDii6FDxkgbqou1GD+XOwuZOmnxn5c2tLvgZVDLHxCV/0ueB+nt9/rEridJrmSHiuQxB0+yMvwyRhm1v4eYswRyAW8k0xIyJ+FWvCKetZ207MorjVOoxMGaXzbvRBRvuzYjk4IuC3bPla4m7CtlhjWljx+hu3zXBZPDLadZRPos9/xDGa2GvRITUQtC/+Yc/bY72IM4gG42sEjFaOKLEc36ffbfYDceuycuIZcHD4fbkO8BkipSr4TbhvuCmtRi73Ifq/711DRU/C//qdqkW4+X+hsf6NG77t5oVfuuqE4mjhK4OvlKFivSHWBHXoAKNIXK4ABUlA+6tjZhiZsIpef0MAJ5MDxuKnBUXtoolGJl5iFdE73iFh/sGcGUFqXZZYWdMZIbLZO2N/mlWjw4HImh/xBmGoEA=
+      texture: ewogICJ0aW1lc3RhbXAiIDogMTY3OTkzOTUwMDYzNiwKICAicHJvZmlsZUlkIiA6ICJkYmE4OTUzOThiYTc0MzZlOTQ2YzVkZTk4N2UzZGVkNSIsCiAgInByb2ZpbGVOYW1lIiA6ICJTb21lQ29tbW9uIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzQ3OWFlMDc3NDAyMDNjNDc1NGFlZTc2MDliZjBlN2M4YTE4MjIzNmJkZTU0MTRhNjQzODU5ODQ4ZjI1M2RlMDAiLAogICAgICAibWV0YWRhdGEiIDogewogICAgICAgICJtb2RlbCIgOiAic2xpbSIKICAgICAgfQogICAgfQogIH0KfQ==
+    location:
+      x: -37.5
+      y: 8
+      z: 110.0
+      world: wow

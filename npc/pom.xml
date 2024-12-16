@@ -2,15 +2,15 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>eu.isweezee</groupId>
-  <artifactId>MMO</artifactId>
+  <groupId>eu.squidcraft</groupId>
+  <artifactId>npc</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>MMO</name>
+  <name>npc</name>
   <url>http://maven.apache.org</url>
 
-  <properties>
+<properties>
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>	
     <maven.compiler.release>8</maven.compiler.release>
@@ -39,7 +39,7 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <outputFile>C:\Users\bouch\Desktop\Servers\1.16\Server 1\plugins\MMO.jar</outputFile>
+                            <outputFile>C:\Users\bouch\Desktop\Servers\1.16\Server 1\plugins\NPCPlugin.jar</outputFile>
                         </configuration>
                     </execution>
                 </executions>
@@ -52,23 +52,8 @@
             </resource>
         </resources>
     </build>
-  	<repositories>
-    	<repository>
-        	<id>YOUR-PROJECT-NAME-mvn-repo</id>
-        	<url>https://raw.github.com/YOUR-USERNAME/YOUR-PROJECT-NAME/mvn-repo/</url>
-        	<snapshots>
-            	<enabled>true</enabled>
-            	<updatePolicy>always</updatePolicy>
-       		</snapshots>
-    	</repository>
-	</repositories>
-	
+  
     <dependencies>
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongodb-driver-sync</artifactId>
-            <version>5.1.4</version>
-        </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
@@ -77,5 +62,3 @@
         </dependency>
   </dependencies>
 </project>
-
-

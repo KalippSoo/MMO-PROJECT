@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import eu.isweezee.mmo.extra.ItemCreator;
+import eu.isweezee.mmo.extra.ItemCreator.Reforge;
 import eu.isweezee.mmo.extra.ItemCreator.Stats;
 
 public enum GameItem{
@@ -26,14 +27,15 @@ public enum GameItem{
 	PIGLOW_LOOT_ITEM(.1, 10, new ItemCreator("Piglow's Organ", new Stats(Material.CACTUS, ItemUse.LOOTS, 0, 0, 0, 0, 0, 0), (byte)2)),
 	
 	//Weapons
-	ALMOST_BROKEN_AXE(11, .05, new ItemCreator("Almost Broken Axe", new Stats(Material.WOODEN_AXE, ItemUse.WEAPON, 50, 25, 20, 40, 0, 0), (byte)2)),
-	XhroAxe(10, 0.1, new ItemCreator("Xhro Divine", new Stats(Material.IRON_AXE, ItemUse.WEAPON, 150, 75, 50, 250, 0, 0), (byte)3)),
+	BROKENSWORD(9, .05, new ItemCreator("Broken Sword", new Stats(Material.STICK, ItemUse.WEAPON, 10, 10, 0, 30, 0, 0), (byte)0)),
+	FOUNDONTHEGROUND(10, .05, new ItemCreator("Found on the Ground", Reforge.HOPELESS, new Stats(Material.IRON_AXE, ItemUse.WEAPON, 20, 20, 30, 40, 0, 0), (byte)1)),
+	//EASTEREGG FOUND THIS ITEM VIA SECRET PNJ
 	
 	//Armors
-	PYROHELMET(14, 1, new ItemCreator("Pyro", new Stats(Material.LEATHER_HELMET, ItemUse.ARMOR, 150, 75, 50, 250, 0, 0), (byte)3)),
-	PYROCHESTPLATE(14.1, 1, new ItemCreator("Pyro", new Stats(Material.LEATHER_CHESTPLATE, ItemUse.ARMOR, 150, 75, 50, 250, 0, 0), (byte)3)),
-	PYROLEGGINGS(14.2, 1, new ItemCreator("Pyro", new Stats(Material.LEATHER_LEGGINGS, ItemUse.ARMOR, 150, 75, 50, 250, 0, 0), (byte)3)),
-	PYROBOOTS(14.3, 1, new ItemCreator("Pyro", new Stats(Material.LEATHER_BOOTS, ItemUse.ARMOR, 150, 75, 50, 250, 0, 0), (byte)3)),
+	RECOVERYOFTHEGRASSLANDHELMET(14, 1, new ItemCreator("Grassland Helmet", new Stats(Material.CHAINMAIL_HELMET, ItemUse.ARMOR, 0, 0, 0, 0, 10, 0), (byte)0)),
+	RECOVERYOFTHEGRASSLANDCHESTPLATE(14.1, 1, new ItemCreator("Grassland Chestplate", new Stats(Material.LEATHER_CHESTPLATE, ItemUse.ARMOR, 0, 0, 0, 0, 10, 0), (byte)0)),
+	RECOVERYOFTHEGRASSLANDLEGGINGS(14.2, 1, new ItemCreator("Grassland Leggings", new Stats(Material.CHAINMAIL_LEGGINGS, ItemUse.ARMOR, 0, 0, 0, 0, 10, 0), (byte)0)),
+	RECOVERYOFTHEGRASSLANDBOOTS(14.3, 1, new ItemCreator("Grassland Boots", new Stats(Material.LEATHER_BOOTS, ItemUse.ARMOR, 0, 0, 0, 0, 10, 0), (byte)0)),
 	;
 	
 	private double id;

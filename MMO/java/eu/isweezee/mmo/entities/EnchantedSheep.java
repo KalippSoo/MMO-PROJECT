@@ -38,7 +38,6 @@ public class EnchantedSheep extends EntityType implements IEntityAngerable{
 		DropLoots loots = new DropLoots();
 		loots.add(GameItem.FIRE_SPHERE);
 		loots.add(GameItem.DARK_SPHERE);
-		loots.add(GameItem.ALMOST_BROKEN_AXE);
 		
 		return loots;
 	}

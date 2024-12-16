@@ -55,7 +55,7 @@ public class PlayerEquipmentUpdateManager {
 							"&7Class: &e&l" + data.getClazzType().name(),
 							"",
 							"&7Damage: &c&l" + mod.getModifiedDamage(),
-							"&7Health: &a&l" + data.getHealth(),
+							"&7Health: &a&l" + mod.getModifiedHealth(),
 							"&7Strenght: &6&l" + mod.getModifiedStrenght(),
 							"&7Crit Chance &c&l" + mod.getModifiedCritChance(),
 							"&7Crit Damage &c&l+" + mod.getModifiedCritDamage(),
