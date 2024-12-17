@@ -25,7 +25,7 @@ public class StatsModifier {
 		return 3 + (modifiedDamage*(1+modifiedStrenght)/100);
 	}
 	public double getDamageWithCrit() {
-		return 3 + (modifiedDamage*(1+modifiedStrenght)/100*(1+modifiedCritDamage)/100);
+		return getDamage() + (modifiedDamage*(1+modifiedStrenght)/100*(1+modifiedCritDamage)/100);
 	}
 
 	public void setModifiedHealth(double modifiedHealth) {

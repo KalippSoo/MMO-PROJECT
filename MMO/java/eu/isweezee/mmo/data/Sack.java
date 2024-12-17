@@ -36,6 +36,7 @@ public class Sack {
 			int amount = Integer.parseInt(pattern[1]);
 			
 			ItemCreator item = GameItem.getItemById(id, amount);
+			if (item == null) continue;
 			this.inventory.addItem(item.get());
 		}
 		

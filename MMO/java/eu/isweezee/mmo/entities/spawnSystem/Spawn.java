@@ -10,17 +10,17 @@ import org.bukkit.block.Block;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import eu.isweezee.mmo.MMO;
-import eu.isweezee.mmo.entities.EntityType;
 import eu.isweezee.mmo.extra.UtilsFactory;
 import net.minecraft.server.v1_16_R3.Entity;
+import net.minecraft.server.v1_16_R3.EntityInsentient;
 
 public class Spawn {
 	
 	public List<Entity> entities = new ArrayList<>();
 	
-	public Spawn(Class<? extends EntityType> entityTarget, int mobCap, int size, int delay){
+	public Spawn(Class<? extends EntityInsentient> entityTarget, int mobCap, int size, int delay){
 		
-		World world = Bukkit.getWorld("world");
+		World world = Bukkit.getWorld("spawn");
 		
 		new BukkitRunnable() {
 			
@@ -37,7 +37,7 @@ public class Spawn {
 				int spawnAmount = (int) Math.random() * (mobCap + 1), count = 0;
 				while(count <= spawnAmount) {
 					count++;
-					int randX = getRandomWithNeg(size) + -6, randZ = getRandomWithNeg(size) + 41;
+					int randX = getRandomWithNeg(size), randZ = getRandomWithNeg(size);
 					Block block = world.getHighestBlockAt(randX, randZ);
 					Location loc = block.getLocation().clone().add(0, 1, 0);
 					

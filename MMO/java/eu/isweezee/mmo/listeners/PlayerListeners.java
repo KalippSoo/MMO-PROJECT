@@ -4,19 +4,17 @@ import org.bson.Document;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Sheep;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.InventoryHolder;
 
 import eu.isweezee.mmo.MMO;
 import eu.isweezee.mmo.data.PlayerData;
-import eu.isweezee.mmo.entities.test;
 import eu.isweezee.mmo.enums.GameItem;
 import eu.isweezee.mmo.enums.ItemUse;
 import eu.isweezee.mmo.extra.DocumentRelated;
@@ -33,15 +31,8 @@ public class PlayerListeners implements Listener{
 		
 		Player player = e.getPlayer();
 		player.getInventory().clear();
-		UtilsFactory.applyData(player);
+		UtilsFactory.playerJoinServer(player);
 		player.setWalkSpeed(0.175f);
-	}
-	
-	@EventHandler
-	public void onKill(PlayerInteractEntityEvent e) {
-		if (e.getRightClicked() instanceof Sheep) {
-			test.spawn(e.getRightClicked().getLocation());
-		}
 	}
 	
 	@EventHandler
@@ -56,6 +47,16 @@ public class PlayerListeners implements Listener{
 		
 		UtilsFactory.DamageIndictor(player, e.getEntity().getLocation(), damage, ifCrit, .3);
 		
+	}
+	
+	@EventHandler
+	public void onInteract(PlayerInteractEvent e) {
+		
+		if (e.getItem() == null)return;
+		if (!e.getAction().name().contains("RIGHT_CLICK"))return;
+		if (!UtilsFactory.stripColor(e.getItem().getItemMeta().getDisplayName()).contains("Rune du"))return;
+		PlayerData data = UtilsFactory.getPlayerData(e.getPlayer().getUniqueId());
+		if (data == null)UtilsFactory.Kick(e.getPlayer(), 45);
 	}
 	
 	@EventHandler
@@ -109,7 +110,6 @@ public class PlayerListeners implements Listener{
 				player.getInventory().setItem(0, itemCreator.get());
 			}
 		}
-		
 	}
 	
 	@EventHandler
@@ -117,6 +117,7 @@ public class PlayerListeners implements Listener{
 		
 		Player player = e.getPlayer();
 		
+		if (!MMO.dataStorage.containsKey(player.getUniqueId()))return;
 		Document playerData = new Document("uuid", player.getUniqueId().toString());
 		Document found = MMO.players.find(playerData).first();
 		

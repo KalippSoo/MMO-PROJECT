@@ -3,6 +3,7 @@ package eu.isweezee.mmo.extra;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.bson.Document;
 import org.bukkit.Bukkit;
@@ -20,10 +21,17 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import eu.isweezee.mmo.MMO;
 import eu.isweezee.mmo.data.PlayerData;
-import eu.isweezee.mmo.entities.EntityType;
+import eu.isweezee.mmo.entities.DropLoots;
+import eu.isweezee.mmo.entities.entities.Void2;
+import eu.isweezee.mmo.entities.spawnSystem.Spawn;
 import eu.isweezee.mmo.enums.ClazzType;
+import eu.isweezee.mmo.enums.GameItem;
+import eu.isweezee.mmo.enums.Rarity;
 import net.md_5.bungee.api.ChatColor;
+import net.minecraft.server.v1_16_R3.DamageSource;
 import net.minecraft.server.v1_16_R3.Entity;
+import net.minecraft.server.v1_16_R3.EntityInsentient;
+import net.minecraft.server.v1_16_R3.EntityPlayer;
 import net.minecraft.server.v1_16_R3.Packet;
 import net.minecraft.server.v1_16_R3.WorldServer;
 
@@ -178,17 +186,18 @@ public class UtilsFactory {
 		ClazzType.setupClass(player);
 	}
 	
-	public static void applyData(Player player) {
+	public static PlayerData applyData(Player player) {
 		
 		DocumentRelated.createOrGetCollectionForPlayer(player);
-		DocumentRelated.putMongoDBIntoJavaObjectPlayer(player);
+		PlayerData data = DocumentRelated.putMongoDBIntoJavaObjectPlayer(player);
 		UtilsFactory.InventorySet(player);
 		
 		MMO.dataStorage.get(player.getUniqueId()).setInventory(player, (Document) ((Document)MMO.players.find(new Document("uuid", player.getUniqueId().toString())).first().get("profile")).get("inventory"));
+		return data;
 	}
 	
 	
-	public static Entity Spawn(Class<? extends EntityType> clazz, Location location) {
+	public static Entity Spawn(Class<? extends EntityInsentient> clazz, Location location) {
 		
 		try {
 			Entity instance = clazz.getConstructor(Location.class).newInstance(location);
@@ -252,6 +261,56 @@ public class UtilsFactory {
 		double random = (Math.random()) * offset;
 		if (Math.random() >= .5) random *= -1;
 		return random;
+	}
+
+	public static void playerJoinServer(Player player) {
+		if (applyData(player) == null)
+			player.kickPlayer(UtilsFactory.color("&c&lDATA ERROR\n&fIt seems like your data wasn't load properly\n\nPlease rejoin !"));
+		
+		player.sendTitle(color("&aWelcome " + player.getName()), color("&7Have a good time in here"), 5, 30, 5);
+	}
+
+	public static PlayerData getPlayerData(UUID uniqueId) {
+		
+		return MMO.dataStorage.get(uniqueId);
+	}
+	
+	public static void Kick(Player player, int errorId) {
+		
+		/*
+		 * Code 45 : Null data profile (most of time a rejoin will fixed the problem)
+		 * 
+		 * 
+		 */
+		
+		player.kickPlayer(color("&cAn error has occured\n\n&fYou have been kicked from a unexpected event &7(error id: " + errorId + "\n&fPlease rejoin !"));
+	}
+
+	public static void onEnable(MMO mmo) {
+		
+		new Spawn(Void2.class, 5, 5, 40);
+		
+	}
+	
+	
+	public static void dropDeathLoot(DamageSource damagesource, int i, boolean flag, DropLoots dropLoots) {
+		if (dropLoots.loots.isEmpty())return;
+		Entity entity = damagesource.getEntity();
+		if (entity instanceof EntityPlayer) {
+			Player player = (Player) entity.getBukkitEntity();
+			ItemStack itemStack = dropLoots.drop();
+			if (itemStack == null)return;
+			itemStack = itemStack.clone();
+			itemStack.setAmount(1);
+			ItemCreator creator = GameItem.getItemCreatorFromItemStack(itemStack);
+			if (creator == null)return;
+			if (GameItem.getIdFromItem(itemStack) == -1)return;
+			MMO.dataStorage.get(player.getUniqueId()).getSack().getInventory().addItem(itemStack);
+			
+			player.sendMessage(UtilsFactory.color(Rarity.getOrdinal(creator.getRarity()).getStr() + " DROP! &fYou have dropped x" + itemStack.getAmount() + " " + itemStack.getItemMeta().getDisplayName()));
+			
+			
+		}
 	}
 	
 }

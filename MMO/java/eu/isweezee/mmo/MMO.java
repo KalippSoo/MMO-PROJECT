@@ -15,14 +15,10 @@ import com.mongodb.client.MongoDatabase;
 
 import eu.isweezee.mmo.data.PlayerData;
 import eu.isweezee.mmo.data.PlayerEquipmentUpdateManager;
-import eu.isweezee.mmo.entities.EnchantedSheep;
-import eu.isweezee.mmo.entities.spawnSystem.Spawn;
+import eu.isweezee.mmo.extra.UtilsFactory;
 import eu.isweezee.mmo.listeners.PlayerListeners;
-import eu.squidcraft.npc.NPCPlugin;
 
 public class MMO extends JavaPlugin{
-	
-	private NPCPlugin npcApi;
 	
 	public static Map<UUID, PlayerData> dataStorage = new HashMap<>();
 	public static Map<Player, Long> abilityCooldown = new HashMap<>();
@@ -36,20 +32,10 @@ public class MMO extends JavaPlugin{
 
 	@Override
 	public void onEnable() {
-
-		npcApi = (NPCPlugin) this.getServer().getPluginManager().getPlugin("NPCPlugin");
-		if (npcApi != null) {
-			System.out.println("La connection a l'api NPCPlugin a été un succès !");
-		}
 		
 		Bukkit.getPluginManager().registerEvents(new PlayerListeners(), this);
-		
 		PlayerEquipmentUpdateManager.run();
-		new Spawn(EnchantedSheep.class, 5, 5, 40);
-	}
-
-	public NPCPlugin getNpcApi() {
-		return npcApi;
+		UtilsFactory.onEnable(this);
 	}
 	
 }	

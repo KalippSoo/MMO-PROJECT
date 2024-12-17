@@ -9,7 +9,7 @@ import eu.isweezee.mmo.enums.GameItem;
 
 public class DropLoots {
 
-	Map<Double, ItemStack> loots = new HashMap<>();
+	public Map<Double, ItemStack> loots = new HashMap<>();
 	double value = 0;
 	
 	public DropLoots() {
@@ -18,6 +18,13 @@ public class DropLoots {
 	
 	public void add(GameItem item) {
 		loots.put(item.getDropChance(), item.getItem().get());
+	}
+	public void add(int id) {
+		for (double d = id; ;d+=0.1) {
+			GameItem gameItem = GameItem.getItemById(d);
+			if (gameItem == null)break;
+			loots.put(gameItem.getDropChance(), gameItem.getItem().get().clone());
+		}
 	}
 	
 	public ItemStack drop() {

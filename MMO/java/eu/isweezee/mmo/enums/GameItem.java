@@ -20,9 +20,10 @@ public enum GameItem{
 	//Loots
 	NOTHING(-1, 101, new ItemCreator("", new Stats(Material.TORCH, ItemUse.LOOTS, 0, 0, 0, 0, 0, 0), (byte)1)),
 	
-	BASIC_LOOT(0, 100, new ItemCreator("Unknown Substance", new Stats(Material.PHANTOM_MEMBRANE, ItemUse.LOOTS, 0, 0, 0, 0, 0, 0), (byte)1)),
-	FIRE_SPHERE(1, 25, new ItemCreator("Fire Sphere", new Stats(Material.ORANGE_DYE, ItemUse.LOOTS, 0, 0, 0, 0, 0, 0), (byte)0)),
-	DARK_SPHERE(2, 5, new ItemCreator("Dark Sphere", new Stats(Material.GRAY_DYE, ItemUse.LOOTS, 0, 0, 0, 0, 0, 0), (byte)1)),
+	TENDERFLESH(1, 25, new ItemCreator("Tender Flesh", new Stats(Material.ROTTEN_FLESH, ItemUse.LOOTS, 0, 0, 0, 0, 0, 0), (byte)0)),
+	DARK_SPHERE(1.1, 5, new ItemCreator("Dark Sphere", new Stats(Material.GRAY_DYE, ItemUse.LOOTS, 0, 0, 0, 0, 0, 0), (byte)1)),
+	
+	BONEPOWDER(2, 50, new ItemCreator("Tooth's bone", new Stats(Material.PHANTOM_MEMBRANE, ItemUse.LOOTS, 0, 0, 0, 0, 0, 0), (byte)0)),
 	
 	PIGLOW_LOOT_ITEM(.1, 10, new ItemCreator("Piglow's Organ", new Stats(Material.CACTUS, ItemUse.LOOTS, 0, 0, 0, 0, 0, 0), (byte)2)),
 	
@@ -55,6 +56,17 @@ public enum GameItem{
 				ItemStack item = gameItems.item.get();
 				item.setAmount(amount);
 				return gameItems.getItem();
+			}
+		}
+		System.err.println("Attempt to get the item from id " + id + " (failed) !");
+		return null;
+	}
+	
+	public static GameItem getItemById(double id) {
+		
+		for (GameItem gameItems : GameItem.values()) {
+			if (gameItems.id == id) {
+				return gameItems;
 			}
 		}
 		System.err.println("Attempt to get the item from id " + id + " (failed) !");

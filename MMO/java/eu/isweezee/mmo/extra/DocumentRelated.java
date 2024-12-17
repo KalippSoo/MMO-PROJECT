@@ -77,7 +77,7 @@ public class DocumentRelated {
 		}
 	}
 	
-	public static void putMongoDBIntoJavaObjectPlayer(Player player) {
+	public static PlayerData putMongoDBIntoJavaObjectPlayer(Player player) {
 		
 		Document found = MMO.players.find(new Document("uuid", player.getUniqueId().toString())).first();
 		
@@ -108,6 +108,7 @@ public class DocumentRelated {
 		data.setArtefacts(new Sack(artefacts, artefacts.getInteger("size", 9), "Sac d'artefacts"));
 		
 		MMO.dataStorage.put(player.getUniqueId(), data);
+		return data;
 	}
 	
 	

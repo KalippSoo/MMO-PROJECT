@@ -1,5 +1,7 @@
 package eu.isweezee.mmo.entities;
 
+import java.text.DecimalFormat;
+
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftArmorStand;
@@ -41,6 +43,7 @@ public abstract class EntityType extends EntityCreature{
 	public abstract void initPathfinderMethod();
 	public abstract double health();
 	public abstract double follow();
+	public abstract double howMuchExpIDrop();
 	
 	public String[] entityState = {"&c[M] ", "&6[S] "};
 	
@@ -135,7 +138,8 @@ public abstract class EntityType extends EntityCreature{
 		}
 	}
 	private String healthMethod() {
-		return " &a" + this.getHealth() + "&f/&c" + health();
+		DecimalFormat format = new DecimalFormat("###.###,##");
+		return " &a" + format.format(this.getHealth()) + "&f/&c" + health();
 	}
 	
 }

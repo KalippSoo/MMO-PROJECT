@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import eu.isweezee.mmo.data.collection.Collection;
 import eu.isweezee.mmo.enums.ClazzType;
 import eu.isweezee.mmo.enums.GameItem;
 import eu.isweezee.mmo.extra.ItemCreator;
@@ -30,6 +31,7 @@ public class PlayerData {
 	private Sack sack;
 	private Sack artefacts;
 	private SpellSlots spellSlots;
+	private boolean usingAbility;
 	
 	public PlayerData(Collection collection, int health, int armor, int strenght, String title, ClazzType clazzType, int critDamage,
 			int critChance, int level) {
@@ -186,6 +188,14 @@ public class PlayerData {
 
 	public void setDamage(int damage) {
 		this.damage = damage;
+	}
+
+	public boolean isUsingAbility() {
+		return usingAbility;
+	}
+
+	public void setUsingAbility(boolean usingAbility) {
+		this.usingAbility = usingAbility;
 	}
 	
 	
