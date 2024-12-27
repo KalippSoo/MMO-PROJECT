@@ -17,6 +17,7 @@ import eu.isweezee.mmo.data.PlayerData;
 import eu.isweezee.mmo.data.PlayerEquipmentUpdateManager;
 import eu.isweezee.mmo.extra.UtilsFactory;
 import eu.isweezee.mmo.listeners.PlayerListeners;
+import eu.squidcraft.npc.NPCPlugin;
 
 public class MMO extends JavaPlugin{
 	
@@ -30,12 +31,18 @@ public class MMO extends JavaPlugin{
 	public static MongoCollection<Document> items = mongoDatabase.getCollection("items");
 	public static MongoCollection<Document> players = mongoDatabase.getCollection("players");
 
+	//API
+	public static NPCPlugin npcPlugin;
+	
 	@Override
 	public void onEnable() {
 		
 		Bukkit.getPluginManager().registerEvents(new PlayerListeners(), this);
 		PlayerEquipmentUpdateManager.run();
-		UtilsFactory.onEnable(this);
+		UtilsFactory.onEnable();
+		
 	}
 	
 }	
+
+

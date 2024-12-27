@@ -1,6 +1,7 @@
 package eu.isweezee.mmo.extra;
 
 import java.lang.reflect.InvocationTargetException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -21,12 +22,16 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import eu.isweezee.mmo.MMO;
 import eu.isweezee.mmo.data.PlayerData;
+import eu.isweezee.mmo.data.impletation.EntityData;
 import eu.isweezee.mmo.entities.DropLoots;
+import eu.isweezee.mmo.entities.entities.HopelessSlave;
 import eu.isweezee.mmo.entities.entities.Void2;
 import eu.isweezee.mmo.entities.spawnSystem.Spawn;
 import eu.isweezee.mmo.enums.ClazzType;
 import eu.isweezee.mmo.enums.GameItem;
 import eu.isweezee.mmo.enums.Rarity;
+import eu.isweezee.mmo.event.PlayerFirstLoginEvent;
+import eu.squidcraft.npc.NPCPlugin;
 import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_16_R3.DamageSource;
 import net.minecraft.server.v1_16_R3.Entity;
@@ -36,7 +41,7 @@ import net.minecraft.server.v1_16_R3.Packet;
 import net.minecraft.server.v1_16_R3.WorldServer;
 
 public class UtilsFactory {
-
+	
 	//STATS
 	public static final double combattant = 3;
 	public static final double combattantCrit = 1.5;
@@ -152,7 +157,7 @@ public class UtilsFactory {
 
 	public static void InventorySet(Player player) {
 
-		PlayerData data = MMO.dataStorage.get(player.getUniqueId());
+		//PlayerData data = MMO.dataStorage.get(player.getUniqueId());
 		
 		player.getInventory().clear();
 		
@@ -166,19 +171,7 @@ public class UtilsFactory {
 		}
 		
 		player.getInventory().setItem(9, buildItem(Material.SADDLE, 1, "&aTes montures"));
-		player.getInventory().setItem(10, buildItem(Material.EMERALD, 1, 
-				"&aTon profil",
-				"&7Niveau: &9&l" + data.getLevel(),
-				"&7Classe: &e&l" + data.getClazzType().name(),
-				"",
-				"&7Point de vie: &c&l" + data.getHealth(),
-				"&7Force: &6&l" + data.getStrenght(),
-				"&7Chances critique &c&l" + data.getCritChance(),
-				"&7Dégâts critique &c&l+" + data.getCritDamage(),
-				"",
-				"&7Cliquez ici pour avoir",
-				"&7un meilleur visuel sur vos,",
-				"&7équipement, runes etc..."));
+		
 		player.getInventory().setItem(18, buildItem(Material.RED_CARPET, 1, "&aCollection"));
 		player.getInventory().setItem(27, buildItem(Material.TOTEM_OF_UNDYING, 1, "&aSac d'artefacts"));
 		player.getInventory().setItem(28, buildItem(Material.CHEST, 1, "&aSac"));
@@ -188,8 +181,12 @@ public class UtilsFactory {
 	
 	public static PlayerData applyData(Player player) {
 		
-		DocumentRelated.createOrGetCollectionForPlayer(player);
+		boolean isFirstTimeJoining = false;
+		
+		isFirstTimeJoining = DocumentRelated.createOrGetCollectionForPlayer(player);
 		PlayerData data = DocumentRelated.putMongoDBIntoJavaObjectPlayer(player);
+		if (isFirstTimeJoining)Bukkit.getPluginManager().callEvent(new PlayerFirstLoginEvent(player, data));
+		
 		UtilsFactory.InventorySet(player);
 		
 		MMO.dataStorage.get(player.getUniqueId()).setInventory(player, (Document) ((Document)MMO.players.find(new Document("uuid", player.getUniqueId().toString())).first().get("profile")).get("inventory"));
@@ -224,7 +221,7 @@ public class UtilsFactory {
 		stand.setInvisible(true);
 		stand.setMarker(true);
 		stand.setCustomNameVisible(true);
-		stand.setCustomName(UtilsFactory.color(!isCrit ? "&c" + damage : "&c&l★" + damage + "★"));
+		stand.setCustomName(UtilsFactory.color(!isCrit ? "&c" + new DecimalFormat("###,###.##").format(damage) : "&c&l★" + new DecimalFormat("###,###.##").format(damage) + "★"));
 		
 		try {
 			Object handle = player.getClass().getMethod("getHandle").invoke(player);
@@ -268,6 +265,9 @@ public class UtilsFactory {
 			player.kickPlayer(UtilsFactory.color("&c&lDATA ERROR\n&fIt seems like your data wasn't load properly\n\nPlease rejoin !"));
 		
 		player.sendTitle(color("&aWelcome " + player.getName()), color("&7Have a good time in here"), 5, 30, 5);
+		if (!player.hasPlayedBefore()) {
+			player.getInventory().setItem(0, GameItem.BROKENSWORD.getItem().get().clone());
+		}
 	}
 
 	public static PlayerData getPlayerData(UUID uniqueId) {
@@ -283,15 +283,20 @@ public class UtilsFactory {
 		 * 
 		 */
 		
-		player.kickPlayer(color("&cAn error has occured\n\n&fYou have been kicked from a unexpected event &7(error id: " + errorId + "\n&fPlease rejoin !"));
+		player.kickPlayer(color("&cAn error has occured\n\n&fYou have been kicked from a unexpected reason &7(error id: " + errorId + "\n&8Feel free to remember the error id to inform the staff\n\n&fPlease rejoin !"));
 	}
 
-	public static void onEnable(MMO mmo) {
+	public static void onEnable() {
 		
-		new Spawn(Void2.class, 5, 5, 40);
+		new Spawn(HopelessSlave.class, 5, 40, 40);
+		new Spawn(Void2.class, 5, 40, 40);
 		
+		NPCPlugin plugin = (NPCPlugin) Bukkit.getPluginManager().getPlugin("NPCPlugin");
+		if (plugin != null) {
+			System.out.println("La liaison du plugin " + plugin.getName() + " s'est faite !");
+			MMO.npcPlugin = plugin;
+		}
 	}
-	
 	
 	public static void dropDeathLoot(DamageSource damagesource, int i, boolean flag, DropLoots dropLoots) {
 		if (dropLoots.loots.isEmpty())return;
@@ -309,8 +314,20 @@ public class UtilsFactory {
 			
 			player.sendMessage(UtilsFactory.color(Rarity.getOrdinal(creator.getRarity()).getStr() + " DROP! &fYou have dropped x" + itemStack.getAmount() + " " + itemStack.getItemMeta().getDisplayName()));
 			
-			
 		}
+	}
+	
+	public static double damageReduction(PlayerData playerData, EntityData entityData) {
+		double armour = 0;
+		double formula = 0;
+		if (playerData != null) {
+			armour = playerData.getStatsModifier().getModifiedArmor();
+		}else {
+			armour = entityData.defense();
+		}
+
+		formula = 100-((armour/(armour+100))*100);
+		return formula;
 	}
 	
 }

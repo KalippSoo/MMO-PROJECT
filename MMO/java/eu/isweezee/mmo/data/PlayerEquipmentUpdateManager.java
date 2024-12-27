@@ -3,6 +3,7 @@ package eu.isweezee.mmo.data;
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,11 +44,13 @@ public class PlayerEquipmentUpdateManager {
 					double strenght = getValue(holdWeapon, armors, "strenght") + data.getStrenght() + (data.getClazzType() == ClazzType.WARRIOR && data.getLevel() < 5 ? 20 : (UtilsFactory.combattant * data.getLevel()));													
 					double critDamage = getValue(holdWeapon, armors, "critdamage") + data.getCritDamage() + (data.getClazzType() == ClazzType.WARRIOR && data.getLevel() < 5 ? 20 : (UtilsFactory.combattantCrit * data.getLevel()));
 					double critChance = getValue(holdWeapon, armors, "critchance") + data.getCritChance();
+					double armour = getValue(holdWeapon, armors, "armor") + data.getArmor();
 					
 					mod.setModifiedDamage(damage);
 					mod.setModifiedStrenght(strenght);
 					mod.setModifiedCritDamage(critDamage);
 					mod.setModifiedCritChance(critChance);
+					mod.setModifiedArmor(armour);
 					
 					players.getInventory().setItem(10, UtilsFactory.buildItem(Material.EMERALD, 1, 
 							"&aYour profile",
@@ -56,6 +59,7 @@ public class PlayerEquipmentUpdateManager {
 							"",
 							"&7Damage: &c&l" + mod.getModifiedDamage(),
 							"&7Health: &a&l" + mod.getModifiedHealth(),
+							"&7Armour: &a&l" + mod.getModifiedArmor() + " &7(You take " + new DecimalFormat("###.#").format(UtilsFactory.damageReduction(data, null)) + "% of the damage taken)",
 							"&7Strenght: &6&l" + mod.getModifiedStrenght(),
 							"&7Crit Chance &c&l" + mod.getModifiedCritChance(),
 							"&7Crit Damage &c&l+" + mod.getModifiedCritDamage(),

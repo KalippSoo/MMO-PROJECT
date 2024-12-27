@@ -4,17 +4,17 @@ import java.util.EnumSet;
 
 import org.bukkit.Location;
 
-import eu.isweezee.mmo.entities.EntityType;
+import net.minecraft.server.v1_16_R3.EntityCreature;
 import net.minecraft.server.v1_16_R3.PathfinderGoal;
 import net.minecraft.server.v1_16_R3.SoundEffects;
 
 public class PathfinderGoalNotGetOutOfBounds extends PathfinderGoal{
 
-	private final EntityType a; //Creature
+	private final EntityCreature a; //Creature
 	private final int range;
 	private Location location;
 		
-	public PathfinderGoalNotGetOutOfBounds(EntityType a, int range) {
+	public PathfinderGoalNotGetOutOfBounds(EntityCreature a, int range) {
 		this.a = a;
 		this.range = range;
 		this.a(EnumSet.of(Type.MOVE));

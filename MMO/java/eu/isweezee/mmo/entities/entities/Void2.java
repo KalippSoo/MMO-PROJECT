@@ -7,6 +7,7 @@ import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftArmorStand;
 import org.bukkit.entity.ArmorStand;
 
+import eu.isweezee.mmo.data.impletation.EntityData;
 import eu.isweezee.mmo.data.impletation.Type;
 import eu.isweezee.mmo.entities.DropLoots;
 import eu.isweezee.mmo.extra.UtilsFactory;
@@ -22,27 +23,25 @@ import net.minecraft.server.v1_16_R3.PathfinderGoalLeapAtTarget;
 import net.minecraft.server.v1_16_R3.PathfinderGoalLookAtPlayer;
 import net.minecraft.server.v1_16_R3.PathfinderGoalMeleeAttack;
 import net.minecraft.server.v1_16_R3.PathfinderGoalNearestAttackableTarget;
-import net.minecraft.server.v1_16_R3.PathfinderGoalOwnerHurtByTarget;
-import net.minecraft.server.v1_16_R3.PathfinderGoalOwnerHurtTarget;
 import net.minecraft.server.v1_16_R3.PathfinderGoalRandomLookaround;
 import net.minecraft.server.v1_16_R3.PathfinderGoalRandomStrollLand;
-import net.minecraft.server.v1_16_R3.PathfinderGoalUniversalAngerReset;
 
-public class Void2 extends EntityWolf implements Type{
+public class Void2 extends EntityWolf implements Type, EntityData{
 	
 	public ArmorStand stand;
-	double health = 50;
+	double health = 500;
 	
 	public Void2(Location l) {
 		super(EntityTypes.WOLF, ((CraftWorld)l.getWorld()).getHandle());
 		this.setLocation(l.getX(), l.getY(), l.getZ(), l.getPitch(), l.getYaw());
 		this.getAttributeInstance(GenericAttributes.MAX_HEALTH).setValue(health);
-		this.getAttributeInstance(GenericAttributes.ATTACK_DAMAGE).setValue(4.0D);
+		this.getAttributeInstance(GenericAttributes.ATTACK_DAMAGE).setValue(damage());
 		this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(follow());
 		this.setHealth((float) health);
 		
 		this.drops.clear();
 		this.expToDrop = this.howMuchExpIDrop();
+		this.maxNoDamageTicks = 0;
 		
 		stand = l.getWorld().spawn(l, ArmorStand.class, type ->{
 			type.setGravity(false);
@@ -56,16 +55,13 @@ public class Void2 extends EntityWolf implements Type{
 	@Override
 	protected void initPathfinder() {
 		this.goalSelector.a(1, new PathfinderGoalFloat(this));
-		this.goalSelector.a(4, new PathfinderGoalLeapAtTarget(this, 0.4F));
+		this.goalSelector.a(4, new PathfinderGoalLeapAtTarget(this, 0.2F));
 		this.goalSelector.a(5, new PathfinderGoalMeleeAttack(this, 1.0D, true));
 		this.goalSelector.a(8, new PathfinderGoalRandomStrollLand(this, 1.0D));
 		this.goalSelector.a(10, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 8.0F));
 		this.goalSelector.a(10, new PathfinderGoalRandomLookaround(this));
-		this.targetSelector.a(1, new PathfinderGoalOwnerHurtByTarget(this));
-		this.targetSelector.a(2, new PathfinderGoalOwnerHurtTarget(this));
 		this.targetSelector.a(3, (new PathfinderGoalHurtByTarget(this, new Class[0])).a(new Class[0]));
 		this.targetSelector.a(7, new PathfinderGoalNearestAttackableTarget<>(this, EntityHuman.class, false));
-		this.targetSelector.a(8, new PathfinderGoalUniversalAngerReset<>(this, true));
 	}
 	
 	@Override
@@ -105,11 +101,12 @@ public class Void2 extends EntityWolf implements Type{
 			stand.remove();
 		}
 	}
+	
 	private String healthMethod() {
 		DecimalFormat format = new DecimalFormat("###,###.##");
 		return " &a" + format.format(this.getHealth()) + "&f/&c" + health;
 	}
-
+	
 	@Override
 	public DropLoots setDropLoots() {
 		
@@ -146,6 +143,18 @@ public class Void2 extends EntityWolf implements Type{
 	public int howMuchExpIDrop() {
 		// TODO Auto-generated method stub
 		return 4;
+	}
+
+	@Override
+	public double damage() {
+		// TODO Auto-generated method stub
+		return 10;
+	}
+
+	@Override
+	public double defense() {
+		// TODO Auto-generated method stub
+		return 5;
 	}
 	
 	

@@ -20,13 +20,17 @@ public class Spawn {
 	
 	public Spawn(Class<? extends EntityInsentient> entityTarget, int mobCap, int size, int delay){
 		
-		World world = Bukkit.getWorld("spawn");
-		
 		new BukkitRunnable() {
+			
+			World world = Bukkit.getWorld("spawn");
 			
 			@Override
 			public void run() {
-				 List<Entity> removal = new ArrayList<>();
+				if (world == null) {
+					world = Bukkit.getWorld("spawn");
+					return;
+				}
+				List<Entity> removal = new ArrayList<>();
 				for (Entity entity : entities) {
 					if (!entity.getBukkitEntity().isValid() || entity.getBukkitEntity().isDead())removal.add(entity);
 				}

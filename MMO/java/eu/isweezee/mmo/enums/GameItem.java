@@ -24,6 +24,7 @@ public enum GameItem{
 	DARK_SPHERE(1.1, 5, new ItemCreator("Dark Sphere", new Stats(Material.GRAY_DYE, ItemUse.LOOTS, 0, 0, 0, 0, 0, 0), (byte)1)),
 	
 	BONEPOWDER(2, 50, new ItemCreator("Tooth's bone", new Stats(Material.PHANTOM_MEMBRANE, ItemUse.LOOTS, 0, 0, 0, 0, 0, 0), (byte)0)),
+	UNKOWNHEART(2.1, 2, new ItemCreator("&kmy heart's heart", new Stats(Material.FERMENTED_SPIDER_EYE, ItemUse.LOOTS, 0, 0, 0, 0, 0, 0), (byte)2)),
 	
 	PIGLOW_LOOT_ITEM(.1, 10, new ItemCreator("Piglow's Organ", new Stats(Material.CACTUS, ItemUse.LOOTS, 0, 0, 0, 0, 0, 0), (byte)2)),
 	
@@ -47,6 +48,14 @@ public enum GameItem{
 		this.id = id;
 		this.item = item;
 		this.dropChance = dropChance;
+	}
+	
+	public static String getCodeGameItem(GameItem gameItem) {
+
+		double itemID = gameItem.getId();
+		int reforgeID = gameItem.getItem().getReforge().getId();
+		
+		return itemID + "_" + reforgeID;
 	}
 	
 	public static ItemCreator getItemById(double id, int amount) {

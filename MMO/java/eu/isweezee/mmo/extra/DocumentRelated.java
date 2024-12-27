@@ -14,7 +14,7 @@ import eu.isweezee.mmo.enums.ClazzType;
 
 public class DocumentRelated {
 
-	public static void createOrGetCollectionForPlayer(Player player) {
+	public static boolean createOrGetCollectionForPlayer(Player player) {
 		Document playerData = new Document("uuid", player.getUniqueId().toString());
 		Document found = MMO.players.find(playerData).first();
 		
@@ -74,7 +74,9 @@ public class DocumentRelated {
 			playerData.append("profile", profile);
 			
 			MMO.players.insertOne(playerData);
+			return true;
 		}
+		return false;
 	}
 	
 	public static PlayerData putMongoDBIntoJavaObjectPlayer(Player player) {

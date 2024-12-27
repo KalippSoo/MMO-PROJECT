@@ -32,6 +32,7 @@ public class PlayerData {
 	private Sack artefacts;
 	private SpellSlots spellSlots;
 	private boolean usingAbility;
+	public int hits = 0;
 	
 	public PlayerData(Collection collection, int health, int armor, int strenght, String title, ClazzType clazzType, int critDamage,
 			int critChance, int level) {

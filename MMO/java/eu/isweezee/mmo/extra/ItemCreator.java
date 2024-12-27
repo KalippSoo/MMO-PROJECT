@@ -210,7 +210,7 @@ public class ItemCreator{
 
 		NONE(-1, "", Arrays.asList()),
 		BLOSSOM(0, "Bitch ", Arrays.asList("&bBitch &7grant you &e210 &7crit damage !")),
-		GODDESS(1, "Godlike ", Arrays.asList("&bGodlike &7grant you:", "&e250 &7crit damage !", "&e75 &7strenght !", "&e75 &7strenght !")),
+		GODDESS(1, "Godlike ", Arrays.asList("&bGodlike &7grant you:", "&e250 &7crit damage !", "&e75 &7damage !", "&e75 &7strenght !")),
 		HOPELESS(2, "Hopeless ", Arrays.asList("&bHopeless &7grants you:", "&e20 &7crit damage !", "&e20 &7strenght")),
 		;
 		
